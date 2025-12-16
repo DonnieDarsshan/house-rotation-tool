@@ -1,5 +1,8 @@
 # 🧭 House Rotation Tool (Cyclic State Transformation)
 
+🔗 Live Demo: https://your-username.github.io/house-rotation-tool/
+
+
 A browser-based analytical tool that demonstrates **cyclic transformations, state separation, validation, and persistence** using plain JavaScript.
 
 > Although inspired by stellar astrology, this project is intentionally designed to showcase **core software engineering principles** used in real-world systems.
