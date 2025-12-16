@@ -23,12 +23,14 @@
     }
 
     select, input {
-      padding: 6px;
-      font-size: 14px;
+      padding: 8px;
+      font-size: 16px;          /* ⬅ same visual weight as output */
+      font-weight: 700;         /* ⬅ bold like output */
       background: #0f172a;
       color: #e5e7eb;
       border: 1px solid #334155;
       border-radius: 6px;
+      width: 100%;
     }
 
     #rotation {
@@ -36,6 +38,7 @@
       color: #facc15;
       font-weight: 700;
       border: 1px solid #facc15;
+      width: auto;
     }
 
     table {
@@ -50,7 +53,7 @@
 
     th, td {
       border: 1px solid #334155;
-      padding: 6px 8px;
+      padding: 8px;
       text-align: left;
       font-weight: 600;
     }
@@ -58,6 +61,12 @@
     th {
       background: #1e293b;
       color: #f8fafc;
+    }
+
+    /* 🔹 STRONG VISUAL SEPARATION BETWEEN VALUES & NOTES */
+    #inputTable td:nth-child(2),
+    #inputTable th:nth-child(2) {
+      border-right: 3px solid #64748b;
     }
 
     .container {
@@ -68,8 +77,19 @@
       align-items: start;
     }
 
-    .table1-wrap { width: 580px; }
-    .table2-wrap { width: 380px; }
+    .table1-wrap {
+      width: 600px;
+      border: 1px solid #475569;
+      border-radius: 10px;
+      padding: 6px;
+    }
+
+    .table2-wrap {
+      width: 400px;
+      border: 1px solid #475569;
+      border-radius: 10px;
+      padding: 6px;
+    }
 
     .container.stacked .table2-wrap {
       grid-column: 1;
@@ -92,6 +112,11 @@
       color: #94a3b8;
       margin-top: 6px;
     }
+
+    .controls {
+      margin-top: 10px;
+      display: none;
+    }
   </style>
 </head>
 
@@ -106,18 +131,27 @@
 <button id="toggleLayoutBtn">Toggle Table Layout</button>
 <button id="saveBtn">Save Chart</button>
 <button id="loadBtn">Load Chart</button>
+<button id="exportJpgBtn">Export JPG</button>
+<button id="sortBtn">Sorting : ON</button>
+
+<div class="controls">
+  <label>
+    <input type="checkbox" id="sortToggle" checked>
+    Sort rotated values
+  </label>
+</div>
 
 <input type="file" id="fileInput" accept=".json" style="display:none">
 
-<div class="container">
+<div class="container" id="captureArea">
 
   <!-- TABLE 1 -->
   <div class="table1-wrap">
     <table>
       <colgroup>
-        <col style="width:160px">
-        <col style="width:240px">
-        <col style="width:180px">
+        <col style="width:150px">
+        <col style="width:300px">
+        <col style="width:120px">
       </colgroup>
       <thead>
         <tr>
@@ -128,15 +162,17 @@
       </thead>
       <tbody id="inputTable"></tbody>
     </table>
-    <div class="note">Use numbers 1–12, comma separated</div>
+    <div class="note">
+      Any symbols allowed as separator ( , . - / | etc ). Only numbers 1–12 are considered.
+    </div>
   </div>
 
   <!-- TABLE 2 -->
   <div class="table2-wrap">
     <table>
       <colgroup>
-        <col style="width:160px">
-        <col style="width:220px">
+        <col style="width:150px">
+        <col style="width:250px">
       </colgroup>
       <thead>
         <tr>
@@ -150,22 +186,21 @@
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
 <script>
   const planets = [
-    "Surya",
-    "Chandra",
-    "Mangala",
-    "Rahu",
-    "Jupiter",
-    "Saturn",
-    "Budha",
-    "Ketu",
-    "Venus"
+    "Surya","Chandra","Mangala","Rahu",
+    "Jupiter","Saturn","Budha","Ketu","Venus"
   ];
 
   const inputTable = document.getElementById("inputTable");
   const outputTable = document.getElementById("outputTable");
   const rotationSelect = document.getElementById("rotation");
+  const sortToggle = document.getElementById("sortToggle");
+  const sortBtn = document.getElementById("sortBtn");
+
+  let doSort = true;
 
   for (let i = 1; i <= 12; i++) {
     rotationSelect.innerHTML += `<option value="${i}">${i}</option>`;
@@ -191,6 +226,11 @@
     return shifted;
   }
 
+  function extractNumbers(str) {
+    const matches = str.match(/\d+/g) || [];
+    return matches.map(n => Number(n)).filter(n => n >= 1 && n <= 12);
+  }
+
   function updateOutput() {
     const rotation = +rotationSelect.value;
 
@@ -203,15 +243,17 @@
         return;
       }
 
-      const nums = input.split(",").map(v => Number(v.trim()));
-      if (nums.some(n => !Number.isInteger(n) || n < 1 || n > 12)) {
+      const nums = extractNumbers(input);
+      if (!nums.length) {
         out.textContent = "";
         return;
       }
 
-      const result = rotation === 1
-        ? nums
-        : nums.map(n => rotateValue(n, rotation)).sort((a, b) => a - b);
+      let result = rotation === 1
+        ? [...nums]
+        : nums.map(n => rotateValue(n, rotation));
+
+      if (doSort) result.sort((a, b) => a - b);
 
       out.textContent = result.join(", ");
     });
@@ -219,8 +261,15 @@
 
   rotationSelect.onchange = updateOutput;
   inputTable.oninput = updateOutput;
+  sortToggle.onchange = updateOutput;
 
-  /* 🔒 CLEAR ALL WITH CONFIRMATION */
+  sortBtn.onclick = () => {
+    doSort = !doSort;
+    sortToggle.checked = doSort;
+    sortBtn.textContent = `Sorting : ${doSort ? "ON" : "OFF"}`;
+    updateOutput();
+  };
+
   clearBtn.onclick = () => {
     const ok = confirm(
       "⚠️ Are you sure you want to clear the entire chart?\n\nThis action cannot be undone."
@@ -235,13 +284,8 @@
     document.querySelector(".container").classList.toggle("stacked");
   };
 
-  /* SAVE */
   saveBtn.onclick = () => {
-    const data = {
-      rotation: rotationSelect.value,
-      planets: {}
-    };
-
+    const data = { rotation: rotationSelect.value, planets: {} };
     planets.forEach(p => {
       data.planets[p] = {
         values: document.querySelector(`[data-planet='${p}']`).value,
@@ -256,7 +300,6 @@
     a.click();
   };
 
-  /* LOAD */
   loadBtn.onclick = () => fileInput.click();
 
   fileInput.onchange = e => {
@@ -264,15 +307,25 @@
     reader.onload = () => {
       const data = JSON.parse(reader.result);
       rotationSelect.value = data.rotation;
-
       planets.forEach(p => {
         document.querySelector(`[data-planet='${p}']`).value = data.planets[p]?.values || "";
         document.querySelector(`[data-note='${p}']`).value = data.planets[p]?.note || "";
       });
-
       updateOutput();
     };
     reader.readAsText(e.target.files[0]);
+  };
+
+  exportJpgBtn.onclick = () => {
+    html2canvas(document.getElementById("captureArea"), {
+      backgroundColor: "#0f172a",
+      scale: 2
+    }).then(canvas => {
+      const link = document.createElement("a");
+      link.download = "house-rotation-chart.jpg";
+      link.href = canvas.toDataURL("image/jpeg", 0.95);
+      link.click();
+    });
   };
 </script>
 
