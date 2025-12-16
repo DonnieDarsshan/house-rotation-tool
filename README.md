@@ -2,6 +2,8 @@
 
 🔗 Live Demo:  (https://donniedarsshan.github.io/house-rotation-tool/)
 
+![Screenshot of the tool](Screenshot.png)
+
 
 A browser-based analytical tool that demonstrates **cyclic transformations, state separation, validation, and persistence** using plain JavaScript.
 
