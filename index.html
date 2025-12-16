@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>House Rotation Tool for Stellar Astrology</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: #e5e7eb;
+      padding: 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      margin-bottom: 14px;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    select, input {
+      padding: 6px;
+      font-size: 14px;
+      background: #0f172a;
+      color: #e5e7eb;
+      border: 1px solid #334155;
+      border-radius: 6px;
+    }
+
+    #rotation {
+      background: #1e293b;
+      color: #facc15;
+      font-weight: 700;
+      border: 1px solid #facc15;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 10px;
+      background: #020617;
+      border-radius: 8px;
+      overflow: hidden;
+      table-layout: fixed;
+    }
+
+    th, td {
+      border: 1px solid #334155;
+      padding: 6px 8px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    th {
+      background: #1e293b;
+      color: #f8fafc;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: 28px;
+      margin-top: 20px;
+      align-items: start;
+    }
+
+    .table1-wrap { width: 580px; }
+    .table2-wrap { width: 380px; }
+
+    .container.stacked .table2-wrap {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    button {
+      padding: 6px 10px;
+      font-weight: 700;
+      background: #1e293b;
+      color: #e5e7eb;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-left: 8px;
+    }
+
+    .note {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-top: 6px;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>House Rotation Tool for Stellar Astrology</h1>
+
+<label><b>Rotation:</b></label>
+<select id="rotation"></select>
+
+<button id="clearBtn">Clear All</button>
+<button id="toggleLayoutBtn">Toggle Table Layout</button>
+<button id="saveBtn">Save Chart</button>
+<button id="loadBtn">Load Chart</button>
+
+<input type="file" id="fileInput" accept=".json" style="display:none">
+
+<div class="container">
+
+  <!-- TABLE 1 -->
+  <div class="table1-wrap">
+    <table>
+      <colgroup>
+        <col style="width:160px">
+        <col style="width:240px">
+        <col style="width:180px">
+      </colgroup>
+      <thead>
+        <tr>
+          <th>Planet</th>
+          <th>Values</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody id="inputTable"></tbody>
+    </table>
+    <div class="note">Use numbers 1–12, comma separated</div>
+  </div>
+
+  <!-- TABLE 2 -->
+  <div class="table2-wrap">
+    <table>
+      <colgroup>
+        <col style="width:160px">
+        <col style="width:220px">
+      </colgroup>
+      <thead>
+        <tr>
+          <th>Planet</th>
+          <th>Rotated Values</th>
+        </tr>
+      </thead>
+      <tbody id="outputTable"></tbody>
+    </table>
+  </div>
+
+</div>
+
+<script>
+  const planets = [
+    "Surya",
+    "Chandra",
+    "Mangala",
+    "Rahu",
+    "Jupiter",
+    "Saturn",
+    "Budha",
+    "Ketu",
+    "Venus"
+  ];
+
+  const inputTable = document.getElementById("inputTable");
+  const outputTable = document.getElementById("outputTable");
+  const rotationSelect = document.getElementById("rotation");
+
+  for (let i = 1; i <= 12; i++) {
+    rotationSelect.innerHTML += `<option value="${i}">${i}</option>`;
+  }
+
+  planets.forEach(p => {
+    inputTable.innerHTML += `
+      <tr>
+        <td>${p}</td>
+        <td><input type="text" data-planet="${p}"></td>
+        <td><input type="text" data-note="${p}"></td>
+      </tr>`;
+    outputTable.innerHTML += `
+      <tr>
+        <td>${p}</td>
+        <td id="out-${p}"></td>
+      </tr>`;
+  });
+
+  function rotateValue(value, rotation) {
+    let shifted = value + (rotation - 1);
+    if (shifted > 12) shifted -= 12;
+    return shifted;
+  }
+
+  function updateOutput() {
+    const rotation = +rotationSelect.value;
+
+    planets.forEach(p => {
+      const input = document.querySelector(`[data-planet='${p}']`).value;
+      const out = document.getElementById(`out-${p}`);
+
+      if (!input.trim()) {
+        out.textContent = "";
+        return;
+      }
+
+      const nums = input.split(",").map(v => Number(v.trim()));
+      if (nums.some(n => !Number.isInteger(n) || n < 1 || n > 12)) {
+        out.textContent = "";
+        return;
+      }
+
+      const result = rotation === 1
+        ? nums
+        : nums.map(n => rotateValue(n, rotation)).sort((a, b) => a - b);
+
+      out.textContent = result.join(", ");
+    });
+  }
+
+  rotationSelect.onchange = updateOutput;
+  inputTable.oninput = updateOutput;
+
+  /* 🔒 CLEAR ALL WITH CONFIRMATION */
+  clearBtn.onclick = () => {
+    const ok = confirm(
+      "⚠️ Are you sure you want to clear the entire chart?\n\nThis action cannot be undone."
+    );
+    if (!ok) return;
+
+    document.querySelectorAll("#inputTable input").forEach(i => i.value = "");
+    document.querySelectorAll("[id^='out-']").forEach(o => o.textContent = "");
+  };
+
+  toggleLayoutBtn.onclick = () => {
+    document.querySelector(".container").classList.toggle("stacked");
+  };
+
+  /* SAVE */
+  saveBtn.onclick = () => {
+    const data = {
+      rotation: rotationSelect.value,
+      planets: {}
+    };
+
+    planets.forEach(p => {
+      data.planets[p] = {
+        values: document.querySelector(`[data-planet='${p}']`).value,
+        note: document.querySelector(`[data-note='${p}']`).value
+      };
+    });
+
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "chart.json";
+    a.click();
+  };
+
+  /* LOAD */
+  loadBtn.onclick = () => fileInput.click();
+
+  fileInput.onchange = e => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const data = JSON.parse(reader.result);
+      rotationSelect.value = data.rotation;
+
+      planets.forEach(p => {
+        document.querySelector(`[data-planet='${p}']`).value = data.planets[p]?.values || "";
+        document.querySelector(`[data-note='${p}']`).value = data.planets[p]?.note || "";
+      });
+
+      updateOutput();
+    };
+    reader.readAsText(e.target.files[0]);
+  };
+</script>
+
+</body>
+</html>
