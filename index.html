@@ -7,128 +7,280 @@
   <title>House Rotation Tool for Stellar Astrology</title>
 
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: #e5e7eb;
-      padding: 20px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
+/* =========================================================
+   PURPLE COSMIC THEME (SAFE PATCH)
+   NO LAYOUT CHANGES • NO WHITE PATCHES
+   ========================================================= */
 
-    h1 {
-      margin-bottom: 14px;
-      font-size: 22px;
-      font-weight: 700;
-    }
+body {
+  font-family: Arial, sans-serif;
+  background: radial-gradient(circle at top, #1a0b2e, #0b0215 70%);
+  color: #e9d5ff;
+  padding: 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
 
-    select, input {
-      padding: 8px;
-      font-size: 16px;          /* ⬅ same visual weight as output */
-      font-weight: 700;         /* ⬅ bold like output */
-      background: #0f172a;
-      color: #e5e7eb;
-      border: 1px solid #334155;
-      border-radius: 6px;
-      width: 100%;
-    }
+h1 {
+  margin-bottom: 14px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #e9d5ff;
+  text-shadow: 0 0 10px rgba(168,85,247,0.45);
+}
 
-    #rotation {
-      background: #1e293b;
-      color: #facc15;
-      font-weight: 700;
-      border: 1px solid #facc15;
-      width: auto;
-    }
+/* ================= INPUTS / SELECTS ================= */
 
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      margin-top: 10px;
-      background: #020617;
-      border-radius: 8px;
-      overflow: hidden;
-      table-layout: fixed;
-    }
+select,
+input {
+  padding: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  background: #12051f;
+  color: #e9d5ff;
+  border: 1px solid #6d28d9;
+  border-radius: 6px;
+  width: 100%;
+  outline: none;
+}
 
-    th, td {
-      border: 1px solid #334155;
-      padding: 8px;
-      text-align: left;
-      font-weight: 600;
-    }
+/* prevent browser white autofill */
+input:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-text-fill-color: #e9d5ff;
+  -webkit-box-shadow: 0 0 0px 1000px #12051f inset;
+}
 
-    th {
-      background: #1e293b;
-      color: #f8fafc;
-    }
+/* radio buttons */
+input[type="radio"] {
+  accent-color: #a855f7;
+  background-color: transparent;
+}
 
-    /* 🔹 STRONG VISUAL SEPARATION BETWEEN VALUES & NOTES */
-    #inputTable td:nth-child(2),
-    #inputTable th:nth-child(2) {
-      border-right: 3px solid #64748b;
-    }
+/* ================= BUTTONS ================= */
 
-    .container {
-      display: grid;
-      grid-template-columns: 3fr 2fr;
-      gap: 28px;
-      margin-top: 20px;
-      align-items: start;
-    }
+button {
+  padding: 6px 10px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #6d28d9, #9333ea);
+  color: #f5f3ff;
+  border: 1px solid #a855f7;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: 8px;
+}
 
-    .table1-wrap {
-      width: 600px;
-      border: 1px solid #475569;
-      border-radius: 10px;
-      padding: 6px;
-    }
+button:hover {
+  background: linear-gradient(135deg, #7c3aed, #a855f7);
+}
 
-    .table2-wrap {
-      width: 400px;
-      border: 1px solid #475569;
-      border-radius: 10px;
-      padding: 6px;
-    }
+/* ================= TABLES ================= */
 
-    .container.stacked .table2-wrap {
-      grid-column: 1;
-      grid-row: 2;
-    }
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 10px;
+  background: #0b0215;
+  table-layout: fixed;
+}
 
-    button {
-      padding: 6px 10px;
-      font-weight: 700;
-      background: #1e293b;
-      color: #e5e7eb;
-      border: 1px solid #334155;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-left: 8px;
-    }
+th,
+td {
+  border: 1px solid #4c1d95;
+  padding: 8px;
+  text-align: left;
+  font-weight: 600;
+  vertical-align: middle;
+  color: #e9d5ff;
+}
 
-    .note {
-      font-size: 12px;
-      color: #94a3b8;
-      margin-top: 6px;
-    }
+th {
+  background: linear-gradient(180deg, #2e1065, #1a0435);
+  color: #f5f3ff;
+}
 
-    .controls {
-      margin-top: 10px;
-      display: none;
-    }
+/* divider emphasis */
+#inputTable td:nth-child(2),
+#inputTable th:nth-child(2) {
+  border-right: 3px solid #7c3aed;
+}
+
+/* ================= WRAPPERS ================= */
+
+.table1-wrap,
+.table2-wrap {
+  width: 100%;
+  max-width: 100%;
+  border: 1px solid #6d28d9;
+  border-radius: 8px;
+  padding: 6px;
+  box-sizing: border-box;
+  background: linear-gradient(180deg, #12051f, #0b0215);
+}
+
+/* ================= NOTES ================= */
+
+.note {
+  font-size: 12px;
+  color: #c4b5fd;
+  margin-top: 6px;
+}
+
+/* ================= DROPDOWNS (NO WHITE PATCHES) ================= */
+
+select option {
+  background: #12051f;
+  color: #e9d5ff;
+}
+
+/* ================= CONTAINER ================= */
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+  margin-top: 20px;
+  align-items: start;
+}
+
+/* ================= ROW HEIGHT SAFETY ================= */
+
+#inputTable td,
+#outputTable td {
+  height: 38px;
+}
+
+/* ================= PLANET COLUMN CENTER ================= */
+
+#inputTable th:nth-child(1),
+#inputTable td:nth-child(1),
+#outputTable th:nth-child(1),
+#outputTable td:nth-child(1) {
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* ================= ROTATION SELECT SPECIAL ================= */
+
+#rotation {
+  background: #2e1065;
+  color: #f5f3ff;
+  border: 1px solid #a855f7;
+  font-weight: 700;
+}
+
+/* ================= CONTROLS ================= */
+
+.controls {
+  margin-top: 10px;
+  display: none;
+}
+
+	
+	
+	
+	/* =========================================================
+   FINAL SIZE & OVERLAP CORRECTIONS (SAFE)
+   ========================================================= */
+
+/* --- FIX TABLE-1 INPUT OVERLAP --- */
+#inputTable input{
+  height: 30px;              /* match original feel */
+  line-height: 30px;
+  padding: 4px 6px;          /* reduced from global */
+  box-sizing: border-box;
+}
+
+/* --- KEEP TABLE-2 OUTPUT CLEAN --- */
+#outputTable td{
+  line-height: 1.2;
+}
+
+/* --- FIX ROTATION DROPDOWN WIDTH --- */
+#rotation{
+  width: auto !important;    /* restore original compact size */
+  min-width: unset;
+  padding: 6px 10px;
+}
+
+/* --- FIX RADIO LABEL SIZE (Forward / Backward) --- */
+label{
+  font-size: 14px;           /* same as before */
+  line-height: 1.2;
+}
+
+/* --- FIX RADIO BUTTON SIZE --- */
+input[type="radio"]{
+  transform: scale(0.95);    /* undo visual enlargement */
+}
+
+/* --- ENSURE NO CELL CONTENT BLEED --- */
+#inputTable td{
+  overflow: hidden;
+}
+
+	
+	
+	
+	/* =========================================================
+   FIX FORWARD / BACKWARD RADIO ALIGNMENT
+   NO SIZE CHANGE • NO LAYOUT CHANGE
+   ========================================================= */
+
+/* force clean inline alignment */
+label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;              /* spacing between radio & text */
+  vertical-align: middle;
+}
+
+/* normalize radio position */
+input[type="radio"] {
+  margin: 0;
+  position: relative;
+  top: 0;
+}
+
+/* prevent flex row squeezing text */
+div[style*="flex"] label {
+  white-space: nowrap;
+}
+
+/* ensure same line height */
+label b,
+label {
+  line-height: 1.2;
+}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
   </style>
+  
+  
+  
+  
 </head>
 
 <body>
 
 <h1>House Rotation Tool for Stellar Astrology</h1>
 
-<label><b>Rotation:</b></label>
-<select id="rotation"></select>
+
+
+
+
+
+
 
 <button id="clearBtn">Clear All</button>
-<button id="toggleLayoutBtn">Toggle Table Layout</button>
 <button id="saveBtn">Save Chart</button>
 <button id="loadBtn">Load Chart</button>
 <button id="exportJpgBtn">Export JPG</button>
@@ -145,46 +297,97 @@
 
 <div class="container" id="captureArea">
 
-  <!-- TABLE 1 -->
-  <div class="table1-wrap">
-    <table>
-      <colgroup>
-        <col style="width:150px">
-        <col style="width:300px">
-        <col style="width:120px">
-      </colgroup>
-      <thead>
-        <tr>
-          <th>Planet</th>
-          <th>Values</th>
-          <th>Notes</th>
-        </tr>
-      </thead>
-      <tbody id="inputTable"></tbody>
-    </table>
-    <div class="note">
-      Any symbols allowed as separator ( , . - / | etc ). Only numbers 1–12 are considered.
-    </div>
-  </div>
 
-  <!-- TABLE 2 -->
-  <div class="table2-wrap">
-    <table>
-      <colgroup>
-        <col style="width:150px">
-        <col style="width:250px">
-      </colgroup>
-      <thead>
-        <tr>
-          <th>Planet</th>
-          <th>Rotated Values</th>
-        </tr>
-      </thead>
-      <tbody id="outputTable"></tbody>
-    </table>
+
+
+
+
+<div class="table1-wrap">
+  <table>
+    <thead>
+		<tr>
+	  <th>Planet</th>
+	  <th>Values 1</th>
+	  <th>Values 2</th>
+	  <th>Sublord 1</th>
+	  <th>Sublord 2</th>
+	  <th>Sub-Sub</th>
+	  <th>Starlord</th>
+	</tr>
+    </thead>
+    <tbody id="inputTable"></tbody>
+  </table>
+  <div class="note">
+    Any symbols allowed as separator. Only numbers 1–12 are considered.
   </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<!-- =======================
+     TOP CONTROL ROW (SINGLE ROW ONLY)
+     ======================= -->
+<div style="display:flex;gap:12px;align-items:center;flex-wrap:nowrap;">
+
+  <label><b>Rotation:</b></label>
+  <select id="rotation"></select>
+
+	<label><b>Pivot Planet:</b></label>
+	<select id="planetFirst" style="width:140px;">
+	  <option selected>Surya</option>
+	  <option>Chandra</option>
+	  <option>Mangala</option>
+	  <option>Rahu</option>
+	  <option>Jupiter</option>
+	  <option>Saturn</option>
+	  <option>Budha</option>
+	  <option>Ketu</option>
+	  <option>Venus</option>
+	</select>
+
+
+  <label style="font-weight:700;white-space:nowrap;">
+    <input type="radio" name="mode" value="forward">
+    Forward (CSL Only)
+  </label>
+
+  <label style="font-weight:700;white-space:nowrap;">
+    <input type="radio" name="mode" value="backward" checked>
+    Backward ( K.P & Cuspal Interlink)
+  </label>
 
 </div>
+
+
+
+
+
+
+
+<div class="table2-wrap">
+  <table>
+    <thead>
+     <tr>
+	  <th>Planet</th>
+	  <th>Values 1</th>
+	  <th>Values 2</th>
+	  <th>Sublord 1</th>
+	  <th>Sublord 2</th>
+	  <th>Sub-Sub</th>
+	  <th>Starlord</th>
+	</tr>
+    </thead>
+    <tbody id="outputTable"></tbody>
+  </table>
+</div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
@@ -206,24 +409,53 @@
     rotationSelect.innerHTML += `<option value="${i}">${i}</option>`;
   }
 
-  planets.forEach(p => {
-    inputTable.innerHTML += `
-      <tr>
-        <td>${p}</td>
-        <td><input type="text" data-planet="${p}"></td>
-        <td><input type="text" data-note="${p}"></td>
-      </tr>`;
-    outputTable.innerHTML += `
-      <tr>
-        <td>${p}</td>
-        <td id="out-${p}"></td>
-      </tr>`;
-  });
+	planets.forEach(p => {
 
-  function rotateValue(value, rotation) {
-    let shifted = value + (rotation - 1);
-    if (shifted > 12) shifted -= 12;
-    return shifted;
+	  /* INPUT TABLE */
+	  inputTable.innerHTML += `
+		<tr>
+		  <td>${p}</td>
+		  <td><input type="text" data-val1="${p}"></td>
+		  <td><input type="text" data-val2="${p}"></td>
+		  <td><input type="text" data-sub1="${p}"></td>
+		  <td><input type="text" data-sub2="${p}"></td>
+		  <td><input type="text" data-subsub="${p}"></td>
+		  <td><input type="text" data-starlord="${p}"></td>
+		</tr>`;
+
+	  /* OUTPUT TABLE */
+	  outputTable.innerHTML += `
+		<tr>
+		  <td>${p}</td>
+		  <td id="out-val1-${p}"></td>
+		  <td id="out-val2-${p}"></td>
+		  <td id="out-sub1-${p}"></td>
+		  <td id="out-sub2-${p}"></td>
+		  <td id="subsub-out-${p}"></td>
+		  <td id="starlord-out-${p}"></td>
+		</tr>`;
+	});
+
+
+  
+  
+  /* ================================
+   DEFAULT PIVOT = SURYA (AUTO APPLY)
+   ================================ */
+planetFirst.value = "Surya";
+planetFirst.dispatchEvent(new Event("change"));
+
+
+  function rotateForward(n, r){
+    let x = n + (r - 1);
+    if(x > 12) x -= 12;
+    return x;
+  }
+
+  function rotateBackward(n, r){
+    let x = n - (r - 1);
+    if(x < 1) x += 12;
+    return x;
   }
 
   function extractNumbers(str) {
@@ -231,37 +463,74 @@
     return matches.map(n => Number(n)).filter(n => n >= 1 && n <= 12);
   }
 
-  function updateOutput() {
-    const rotation = +rotationSelect.value;
 
-    planets.forEach(p => {
-      const input = document.querySelector(`[data-planet='${p}']`).value;
-      const out = document.getElementById(`out-${p}`);
 
-      if (!input.trim()) {
-        out.textContent = "";
-        return;
-      }
 
-      const nums = extractNumbers(input);
-      if (!nums.length) {
-        out.textContent = "";
-        return;
-      }
 
-      let result = rotation === 1
-        ? [...nums]
-        : nums.map(n => rotateValue(n, rotation));
+	function updateOutput() {
+	  const rotation = +rotationSelect.value;
+	  const mode = document.querySelector("input[name='mode']:checked").value;
 
-      if (doSort) result.sort((a, b) => a - b);
+		planets.forEach(p => {
 
-      out.textContent = result.join(", ");
-    });
-  }
+		  function rotateField(inputSel, outputId){
+			const input = document.querySelector(inputSel);
+			const out   = document.getElementById(outputId);
+
+			if(!input || !out || !input.value.trim()){
+			  out.textContent = "";
+			  return;
+			}
+
+			let nums = extractNumbers(input.value);
+			if(!nums.length){
+			  out.textContent = "";
+			  return;
+			}
+
+			let res = nums.map(n =>
+			  mode === "forward"
+				? rotateForward(n, rotation)
+				: rotateBackward(n, rotation)
+			);
+
+			if(doSort) res.sort((a,b)=>a-b);
+			out.textContent = res.join(", ");
+		  }
+
+		  rotateField(`[data-val1='${p}']`, `out-val1-${p}`);
+		  rotateField(`[data-val2='${p}']`, `out-val2-${p}`);
+
+		  rotateField(`[data-sub1='${p}']`, `out-sub1-${p}`);
+		  rotateField(`[data-sub2='${p}']`, `out-sub2-${p}`);
+
+		  rotateField(`[data-subsub='${p}']`, `subsub-out-${p}`);
+		  rotateField(`[data-starlord='${p}']`, `starlord-out-${p}`);
+
+		});
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   rotationSelect.onchange = updateOutput;
   inputTable.oninput = updateOutput;
-  sortToggle.onchange = updateOutput;
+  document.querySelectorAll("input[name='mode']").forEach(r => r.onchange = updateOutput);
 
   sortBtn.onclick = () => {
     doSort = !doSort;
@@ -271,34 +540,62 @@
   };
 
   clearBtn.onclick = () => {
-    const ok = confirm(
-      "⚠️ Are you sure you want to clear the entire chart?\n\nThis action cannot be undone."
-    );
-    if (!ok) return;
-
+    if(!confirm("Clear entire chart?")) return;
     document.querySelectorAll("#inputTable input").forEach(i => i.value = "");
     document.querySelectorAll("[id^='out-']").forEach(o => o.textContent = "");
   };
 
-  toggleLayoutBtn.onclick = () => {
-    document.querySelector(".container").classList.toggle("stacked");
+
+
+
+
+
+
+/* ================================
+   SAVE CHART (FIXED)
+   ================================ */
+saveBtn.onclick = () => {
+  const data = {
+    rotation: rotationSelect.value,
+    mode: document.querySelector("input[name='mode']:checked").value,
+    planets: {}
   };
 
-  saveBtn.onclick = () => {
-    const data = { rotation: rotationSelect.value, planets: {} };
     planets.forEach(p => {
-      data.planets[p] = {
-        values: document.querySelector(`[data-planet='${p}']`).value,
-        note: document.querySelector(`[data-note='${p}']`).value
-      };
-    });
+	   data.planets[p] = {
+	  val1: document.querySelector(`[data-val1='${p}']`).value,
+	  val2: document.querySelector(`[data-val2='${p}']`).value,
+	  sub1: document.querySelector(`[data-sub1='${p}']`).value,
+	  sub2: document.querySelector(`[data-sub2='${p}']`).value,
+	  subsub: document.querySelector(`[data-subsub='${p}']`).value,
+	  starlord: document.querySelector(`[data-starlord='${p}']`).value
+	};
 
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "chart.json";
-    a.click();
-  };
+  });
+
+
+  const blob = new Blob(
+    [JSON.stringify(data, null, 2)],
+    { type: "application/json" }
+  );
+
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "chart.json";
+  a.click();
+};
+
+
+
+
+
+
+
+
+
+
+
+
 
   loadBtn.onclick = () => fileInput.click();
 
@@ -307,10 +604,22 @@
     reader.onload = () => {
       const data = JSON.parse(reader.result);
       rotationSelect.value = data.rotation;
+      document.querySelector(`input[value='${data.mode || "forward"}']`).checked = true;
+	  
+	  
       planets.forEach(p => {
-        document.querySelector(`[data-planet='${p}']`).value = data.planets[p]?.values || "";
-        document.querySelector(`[data-note='${p}']`).value = data.planets[p]?.note || "";
-      });
+	  document.querySelector(`[data-val1='${p}']`).value = data.planets[p]?.val1 || "";
+	  document.querySelector(`[data-val2='${p}']`).value = data.planets[p]?.val2 || "";
+
+	  document.querySelector(`[data-sub1='${p}']`).value = data.planets[p]?.sub1 || "";
+	  document.querySelector(`[data-sub2='${p}']`).value = data.planets[p]?.sub2 || "";
+
+	  document.querySelector(`[data-subsub='${p}']`).value = data.planets[p]?.subsub || "";
+	  document.querySelector(`[data-starlord='${p}']`).value = data.planets[p]?.starlord || "";
+	});
+
+
+
       updateOutput();
     };
     reader.readAsText(e.target.files[0]);
@@ -328,6 +637,85 @@
     });
   };
 </script>
+
+
+
+
+<script>
+
+/* =========================================================
+   PLANET FIRST – SAFE ROW REORDER
+   DOES NOT TOUCH SAVE / LOAD / EXPORT / DATA
+   ========================================================= */
+(function(){
+
+  const planetFirstSelect = document.getElementById("planetFirst");
+  if(!planetFirstSelect) return;
+
+	planetFirstSelect.addEventListener("change", () => {
+
+  const pivot = planetFirstSelect.value;
+  if(!pivot) return;
+
+
+
+
+  /* FIXED BASE ORDER — CYCLICAL */
+  const baseOrder = [
+    "Surya",
+    "Chandra",
+    "Mangala",
+    "Rahu",
+    "Jupiter",
+    "Saturn",
+    "Budha",
+    "Ketu",
+    "Venus"
+  ];
+
+  const inRows  = Array.from(document.querySelectorAll("#inputTable tr"));
+  const outRows = Array.from(document.querySelectorAll("#outputTable tr"));
+
+  /* TRUE CYCLICAL ROTATION */
+  const pivotIndex = baseOrder.indexOf(pivot);
+  if (pivotIndex === -1) return;
+
+  const newOrder = [
+    ...baseOrder.slice(pivotIndex),
+    ...baseOrder.slice(0, pivotIndex)
+  ];
+
+  
+  
+
+
+  inputTable.innerHTML = "";
+  outputTable.innerHTML = "";
+
+  newOrder.forEach(p => {
+    const inRow  = inRows.find(r => r.children[0].textContent === p);
+    const outRow = outRows.find(r => r.children[0].textContent === p);
+    if(inRow)  inputTable.appendChild(inRow);
+    if(outRow) outputTable.appendChild(outRow);
+  });
+
+  /* re-run rotation safely */
+  updateOutput();
+
+});
+
+
+
+})();
+
+
+</script>
+
+
+
+
+
+
 
 </body>
 </html>
