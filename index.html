@@ -7,6 +7,12 @@
   <title>House Rotation Tool for Stellar Astrology</title>
 
   <style>
+  
+  
+  * {
+  box-sizing: border-box;
+}
+
 /* =========================================================
    PURPLE COSMIC THEME (SAFE PATCH)
    NO LAYOUT CHANGES • NO WHITE PATCHES
@@ -16,10 +22,10 @@ body {
   font-family: Arial, sans-serif;
   background: radial-gradient(circle at top, #1a0b2e, #0b0215 70%);
   color: #e9d5ff;
-  padding: 20px;
-  max-width: 1100px;
-  margin: 0 auto;
+  padding: 10px;
+  margin: 0;
 }
+
 
 h1 {
   margin-bottom: 14px;
@@ -84,6 +90,13 @@ table {
   table-layout: fixed;
 }
 
+
+table {
+  width: 100%;
+  max-width: 100%;
+}
+
+
 th,
 td {
   border: 1px solid #4c1d95;
@@ -110,11 +123,10 @@ th {
 .table1-wrap,
 .table2-wrap {
   width: 100%;
-  max-width: 100%;
+  display: block;
   border: 1px solid #6d28d9;
   border-radius: 8px;
   padding: 6px;
-  box-sizing: border-box;
   background: linear-gradient(180deg, #12051f, #0b0215);
 }
 
@@ -143,11 +155,28 @@ select option {
   align-items: start;
 }
 
+
+#captureArea{
+  width: 100%;
+  max-width: 100%;
+}
+
+
 /* ================= ROW HEIGHT SAFETY ================= */
 
-#inputTable td,
-#outputTable td {
+#inputTable td {
   height: 38px;
+}
+
+#outputTable td {
+  height: 42px;          /* constant visual height */
+  min-height: 42px;
+  max-height: 42px;
+}
+
+
+#outputTable {
+  min-height: 420px;     /* keeps table always tall */
 }
 
 /* ================= PLANET COLUMN CENTER ================= */
@@ -267,6 +296,180 @@ label {
 	
 	
 	
+	
+	
+	
+	
+	/* =========================================================
+   MAGENTA LIGHT THEME (TOGGLE SAFE)
+   ========================================================= */
+
+body.light-theme {
+  background: radial-gradient(circle at top, #ffe4f1, #f7c1dd 70%);
+  color: #3b043b;
+}
+
+/* headings */
+body.light-theme h1 {
+  color: #5b005b;
+  text-shadow: 0 0 8px rgba(219,39,119,0.45);
+}
+
+/* wrappers */
+body.light-theme .table1-wrap,
+body.light-theme .table2-wrap {
+  background: linear-gradient(180deg, #ffd6ea, #f3b6d8);
+  border-color: #db2777;
+}
+
+/* tables */
+body.light-theme table {
+  background: #ffe4f1;
+}
+
+body.light-theme th {
+  background: linear-gradient(180deg, #db2777, #be185d);
+  color: #fff;
+}
+
+body.light-theme td {
+  color: #4a044e;
+  border-color: #db2777;
+}
+
+/* inputs & selects stay dark inside */
+/* default: inputs stay dark EXCEPT table-1 */
+body.light-theme input {
+  background: #2a062a;
+  color: #fce7f3;
+  border-color: #db2777;
+}
+
+/* TABLE-1 INPUT BOXES – MAGENTA LIGHT */
+body.light-theme #inputTable input {
+  background: linear-gradient(180deg, #ffe4f1, #f7c1dd);
+  color: #4a044e;
+  border-color: #db2777;
+  box-shadow: inset 0 0 0 1px rgba(219,39,119,0.25);
+}
+
+
+
+
+/* ALL DROPDOWNS – MAGENTA THEME */
+body.light-theme select {
+  background: linear-gradient(180deg, #fbcfe8, #f472b6);
+  color: #4a044e;
+  border-color: #db2777;
+}
+
+
+
+
+
+
+/* dropdown options */
+body.light-theme select option {
+  background: #2a062a;
+  color: #fce7f3;
+}
+
+/* buttons */
+body.light-theme button {
+  background: linear-gradient(135deg, #db2777, #ec4899);
+  border-color: #be185d;
+}
+
+body.light-theme button:hover {
+  background: linear-gradient(135deg, #ec4899, #f472b6);
+}
+
+/* radio */
+body.light-theme input[type="radio"] {
+  accent-color: #db2777;
+}
+
+/* notes */
+body.light-theme .note {
+  color: #831843;
+}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/* =========================================================
+   LIGHT THEME – FORCE MAGENTA DROPDOWNS (FINAL OVERRIDE)
+   ========================================================= */
+
+body.light-theme select {
+  background: linear-gradient(180deg, #fbcfe8, #f472b6) !important;
+  color: #4a044e !important;
+  border-color: #db2777 !important;
+}
+
+/* =========================================================
+   LIGHT THEME – DROPDOWN POPUP (WINDOWS SAFE)
+   ========================================================= */
+
+body.light-theme select option {
+  background-color: #f472b6 !important;   /* solid magenta */
+  color: #3b043b !important;
+}
+
+	
+body.light-theme select option:checked,
+body.light-theme select option:hover {
+  background-color: #db2777 !important;   /* deep magenta */
+  color: #fff !important;
+}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+/* =========================================================
+   EXTRA VERTICAL SPACING BETWEEN TABLE SECTIONS
+   (HALF SIZE – BALANCED VIEW)
+   ========================================================= */
+
+.container {
+  gap: 40px !important;
+}
+
+/* space after TABLE 1 */
+.table1-wrap {
+  margin-bottom: 50px !important;
+}
+
+/* space after TABLE 2 */
+.table2-wrap {
+  margin-bottom: 50px !important;
+}
+
+/* TABLE 3 block spacing */
+div[style*="grid-template-columns:repeat(4"] {
+  margin-top: 60px !important;
+}
+
+	
+	div[style*="grid-template-columns:repeat(4"] {
+  margin-bottom: 80px !important;
+}
+	
+	
+	
   </style>
   
   
@@ -288,8 +491,15 @@ label {
 <button id="clearBtn">Clear All</button>
 <button id="saveBtn">Save Chart</button>
 <button id="loadBtn">Load Chart</button>
-<button id="exportJpgBtn">Export JPG</button>
 <button id="sortBtn">Sorting : ON</button>
+
+
+
+<label style="margin-left:14px;font-weight:700;cursor:pointer;">
+  <input type="checkbox" id="themeToggle" >
+  Light Theme
+</label>
+
 
 <div class="controls">
   <label>
@@ -377,6 +587,22 @@ label {
 
 
 <div class="table2-wrap">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <table>
     <thead>
      <tr>
@@ -394,7 +620,81 @@ label {
 </div>
 
 
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+
+
+
+<!-- =======================
+     TABLE 3 – FOUR PARALLEL COMPARISON TABLES
+     ======================= -->
+
+<div style="margin-top:28px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;">
+
+  <!-- ===== TABLE A ===== -->
+  <div class="table2-wrap">
+    <div style="display:flex;gap:6px;margin-bottom:6px;">
+      <select class="cmp-rot" data-t="A"></select>
+      <select class="cmp-pivot" data-t="A"></select>
+    </div>
+    <table>
+      <thead>
+        <tr><th>Planet</th><th>Value</th></tr>
+      </thead>
+      <tbody id="cmp-body-A"></tbody>
+    </table>
+  </div>
+
+  <!-- ===== TABLE B ===== -->
+  <div class="table2-wrap">
+    <div style="display:flex;gap:6px;margin-bottom:6px;">
+      <select class="cmp-rot" data-t="B"></select>
+      <select class="cmp-pivot" data-t="B"></select>
+    </div>
+    <table>
+      <thead>
+        <tr><th>Planet</th><th>Value</th></tr>
+      </thead>
+      <tbody id="cmp-body-B"></tbody>
+    </table>
+  </div>
+
+  <!-- ===== TABLE C ===== -->
+  <div class="table2-wrap">
+    <div style="display:flex;gap:6px;margin-bottom:6px;">
+      <select class="cmp-rot" data-t="C"></select>
+      <select class="cmp-pivot" data-t="C"></select>
+    </div>
+    <table>
+      <thead>
+        <tr><th>Planet</th><th>Value</th></tr>
+      </thead>
+      <tbody id="cmp-body-C"></tbody>
+    </table>
+  </div>
+
+  <!-- ===== TABLE D ===== -->
+  <div class="table2-wrap">
+    <div style="display:flex;gap:6px;margin-bottom:6px;">
+      <select class="cmp-rot" data-t="D"></select>
+      <select class="cmp-pivot" data-t="D"></select>
+    </div>
+    <table>
+      <thead>
+        <tr><th>Planet</th><th>Value</th></tr>
+      </thead>
+      <tbody id="cmp-body-D"></tbody>
+    </table>
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
 
 <script>
   const planets = [
@@ -630,17 +930,6 @@ saveBtn.onclick = () => {
     reader.readAsText(e.target.files[0]);
   };
 
-  exportJpgBtn.onclick = () => {
-    html2canvas(document.getElementById("captureArea"), {
-      backgroundColor: "#0f172a",
-      scale: 2
-    }).then(canvas => {
-      const link = document.createElement("a");
-      link.download = "house-rotation-chart.jpg";
-      link.href = canvas.toDataURL("image/jpeg", 0.95);
-      link.click();
-    });
-  };
 </script>
 
 
@@ -714,7 +1003,155 @@ saveBtn.onclick = () => {
 })();
 
 
+
+
+
+
+
+/* =========================================================
+   TABLE 3 – FULLY SANDBOXED (ZERO SIDE EFFECTS)
+   DOES NOT TOUCH TABLE 1 / TABLE 2 / PLANET-FIRST
+   ========================================================= */
+(function(){
+
+  const LOCAL_PLANETS = [
+    "Surya","Chandra","Mangala","Rahu",
+    "Jupiter","Saturn","Budha","Ketu","Venus"
+  ];
+
+  const TABLES = ["A","B","C","D"];
+
+  /* ---------- local helpers ---------- */
+  function extractNums(str){
+    return (str.match(/\d+/g) || [])
+      .map(n=>+n)
+      .filter(n=>n>=1 && n<=12);
+  }
+
+  function rotF(n,r){ return ((n + r - 2) % 12) + 1; }
+  function rotB(n,r){ return ((n - r + 12) % 12) + 1; }
+
+  /* ---------- build rows once ---------- */
+  TABLES.forEach(t=>{
+    const body = document.getElementById(`cmp-body-${t}`);
+    if(body.children.length) return;
+
+    LOCAL_PLANETS.forEach(p=>{
+      const tr = document.createElement("tr");
+     tr.innerHTML = `<td>&nbsp;</td><td>&nbsp;</td>`;
+	tr.dataset.planet = p;
+
+      body.appendChild(tr);
+    });
+  });
+
+  /* ---------- dropdowns ---------- */
+  document.querySelectorAll(".cmp-rot").forEach(s=>{
+  s.innerHTML = `<option value="">Rotation</option>`;
+  for(let i=1;i<=12;i++) s.innerHTML += `<option>${i}</option>`;
+  s.value = "";
+});
+
+
+  document.querySelectorAll(".cmp-pivot").forEach(s=>{
+  s.innerHTML = `<option value="">Planet</option>`;
+  LOCAL_PLANETS.forEach(p=>s.innerHTML += `<option>${p}</option>`);
+  s.value = "";
+});
+
+
+  /* ---------- update ---------- */
+  function updateT3(){
+
+    const mode =
+      document.querySelector("input[name='mode']:checked")?.value || "backward";
+
+    TABLES.forEach(t=>{
+
+      const rotSel = document.querySelector(`.cmp-rot[data-t="${t}"]`);
+		const pivSel = document.querySelector(`.cmp-pivot[data-t="${t}"]`);
+
+		const rot   = +rotSel.value;
+		const pivot = pivSel.value;
+
+		if(!rotSel.value || !pivot){
+		  document
+			.getElementById(`cmp-body-${t}`)
+			.querySelectorAll("tr")
+			.forEach(r=>{
+			  r.children[0].innerHTML = "&nbsp;";
+			  r.children[1].innerHTML = "&nbsp;";
+			});
+		  return;
+		}
+
+
+
+      const body = document.getElementById(`cmp-body-${t}`);
+      const rows = Array.from(body.querySelectorAll("tr"));
+
+      const idx = rows.findIndex(r => r.dataset.planet === pivot);
+      if(idx>0){
+        [...rows.slice(idx),...rows.slice(0,idx)]
+          .forEach(r=>body.appendChild(r));
+      }
+
+      rows.forEach(r=>{
+        const planet = r.dataset.planet;
+		r.children[0].textContent = planet;
+        const out    = r.children[1];
+
+        const input =
+          document.querySelector(`[data-val1="${planet}"]`)?.value || "";
+
+        const nums = extractNums(input);
+        if(!nums.length){ out.textContent=""; return; }
+
+        const res = nums.map(n =>
+          mode==="forward" ? rotF(n,rot) : rotB(n,rot)
+        ).sort((a,b)=>a-b);
+
+        out.textContent = res.join(", ");
+      });
+
+    });
+  }
+
+  /* ---------- listeners (LOCAL ONLY) ---------- */
+  document.querySelectorAll(".cmp-rot")
+    .forEach(s=>s.addEventListener("change", updateT3));
+
+  document.querySelectorAll(".cmp-pivot")
+    .forEach(s=>s.addEventListener("change", updateT3));
+
+  document.querySelectorAll("#inputTable input")
+    .forEach(i=>i.addEventListener("input", updateT3));
+
+  document.querySelectorAll("input[name='mode']")
+    .forEach(r=>r.addEventListener("change", updateT3));
+
+})();
 </script>
+
+
+
+
+
+<script>
+/* =========================================================
+   THEME TOGGLE (UI ONLY – NO LOGIC)
+   ========================================================= */
+(function(){
+  const toggle = document.getElementById("themeToggle");
+  if(!toggle) return;
+
+  toggle.addEventListener("change", () => {
+    document.body.classList.toggle("light-theme", toggle.checked);
+  });
+})();
+</script>
+
+
 
 
 
